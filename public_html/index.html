@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Fotometria</title>
+        <link rel="stylesheet" href="css/jquery-ui-1.10.4.min.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
+    </head>
+    <body>
+        <div class="container" ng-app="Fotometria" ng-controller="FotometriaController">
+            <h1>Fotometria</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th></th>
+                    <th>ISO</th>
+                    <th>Velocidade (obturador)</th>
+                    <th>Abertura (diafragma)</th>
+                </tr>
+                <tr>
+                    <th>Configuração 1</th>
+                    <td><div id="isoA"></div>{{isoA}}</td>
+                    <td><div id="shutterA"></div>{{shutterA}}</td>
+                    <td><div id="apertureA"></div>{{apertureA}}</td>
+                </tr>
+                <tr>
+                    <th>Diferença</th>
+                    <td>{{deltaIso}} EV</td>
+                    <td>{{deltaShutter}} EV</td>
+                    <td>{{deltaAperture}} EV</td>
+                </tr>
+                <tr>
+                    <th>Configuração 2</th>
+                    <td><div id="isoB"></div>{{isoB}}</td>
+                    <td><div id="shutterB"></div>{{shutterB}}</td>
+                    <td><div id="apertureB"></div>{{apertureB}}</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td colspan="3">{{deltaTotal}} EV</td>
+                </tr>
+            </table>
+        </div>
+        <script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+        <script src="js/jquery-ui-1.10.4.min.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="js/angular.min.js" type="text/javascript"></script>
+        <script src="js/Fotometria.js" type="text/javascript"></script>
+    </body>
+</html>
