@@ -1,3 +1,5 @@
+'use strict';
+
 describe("ISO", function() {
 
     it("It should be possible to get all possible ISO values", function() {

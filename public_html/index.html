@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css">
     </head>
     <body>
-        <div class="container" ng-app="Fotometria" ng-controller="FotometriaController">
+        <div class="container" ng-app="Fotometria" ng-controller="FotometriaCtrl">
             <h1>Fotometria</h1>
             <table class="table table-striped">
                 <tr>
@@ -20,7 +20,7 @@
                 </tr>
                 <tr>
                     <th>Configuração 1</th>
-                    <td><div id="isoA"></div>{{isoA}}</td>
+                    <td><div id="isoA" class="iso-slider"></div>{{isoA}}</td>
                     <td><div id="shutterA"></div>{{shutterA}}</td>
                     <td><div id="apertureA"></div>{{apertureA}}</td>
                 </tr>
@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                     <th>Configuração 2</th>
-                    <td><div id="isoB"></div>{{isoB}}</td>
+                    <td><div id="isoB" class="iso-slider"></div>{{isoB}}</td>
                     <td><div id="shutterB"></div>{{shutterB}}</td>
                     <td><div id="apertureB"></div>{{apertureB}}</td>
                 </tr>

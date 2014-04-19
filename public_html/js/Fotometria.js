@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function IsoValues() {
     var result = [];
@@ -9,7 +9,6 @@ function IsoValues() {
 
     return result;
 }
-
 
 function Iso(value) {
 
@@ -114,33 +113,28 @@ function Configuration(iso, shutter, aperture) {
 
 }
 
-var isos = IsoValues();
-var shutters = ShutterValues();
-var apertures = ApertureValues();
-
-$('#isoA').slider({min: 0, max: isos.length - 1});
-$('#shutterA').slider({min: 0, max: shutters.length - 1});
-$('#apertureA').slider({min: 0, max: apertures.length - 1});
-
-$('#isoB').slider({min: 0, max: isos.length - 1});
-$('#shutterB').slider({min: 0, max: shutters.length - 1});
-$('#apertureB').slider({min: 0, max: apertures.length - 1});
-
 var fotometria = angular.module('Fotometria', []);
 
-fotometria.controller('FotometriaController', function($scope) {
-    $scope.isoA = isos[$('#isoA').slider('value')];
-    $scope.shutterA = shutters[$('#shutterA').slider('value')];
-    $scope.apertureA = apertures[$('#apertureA').slider('value')];
+fotometria.controller('FotometriaCtrl', ['$scope', function($scope) {
+        $scope.isos = IsoValues();
+    }]);
 
-    $scope.isoB = isos[$('#isoB').slider('value')];
-    $scope.shutterB = shutters[$('#shutterB').slider('value')];
-    $scope.apertureB = apertures[$('#apertureB').slider('value')];
-
-    $scope.deltaIso = $scope.isoA - $scope.isoB;
-    $scope.deltaShutter = $scope.shutterA - $scope.shutterB;
-    $scope.deltaAperture = $scope.apertureA - $scope.apertureB;
-    $scope.deltaTotal = $scope.deltaIso + $scope.deltaShutter + $scope.deltaAperture;
-
-
+fotometria.directive('isoSlider', function() {
+    return {
+        restrict: 'C',
+        scope: {
+            iso: '=id'
+        },
+        link: function(scope, element, attrs) {
+            element.slider({
+                min: 0,
+                max: scope.$parent.isos.length - 1,
+                slide: function(event, ui) {
+                    scope.iso = scope.$parent.isos[ui.value];
+                    scope.$apply();
+                }
+            });
+            scope.iso = scope.$parent.isos[element.slider('value')];
+        }
+    };
 });
