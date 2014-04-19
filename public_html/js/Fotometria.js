@@ -4,7 +4,7 @@ function Iso(value) {
 
     this.value = value;
 
-    this.toReach = function(other) {
+    this.compareTo = function(other) {
         var isos = IsoValues();
 
         var index1 = isos.indexOf(this.value);
@@ -29,7 +29,7 @@ function Shutter(value) {
 
     this.value = value;
 
-    this.toReach = function(other) {
+    this.compareTo = function(other) {
         var shutters = ShutterValues();
 
         var index1 = shutters.indexOf(this.value);
@@ -59,7 +59,7 @@ function Aperture(value) {
 
     this.value = value;
 
-    this.toReach = function(other) {
+    this.compareTo = function(other) {
         var apertures = ApertureValues();
 
         var index1 = apertures.indexOf(this.value);
@@ -79,4 +79,36 @@ function ApertureValues() {
     }
 
     return result;
+}
+
+function Configuration(iso, shutter, aperture) {
+
+    this.iso = new Iso(iso);
+    this.shutter = new Shutter(shutter);
+    this.aperture = new Aperture(aperture);
+
+    this.getIso = function() {
+        return this.iso.value;
+    };
+
+    this.getShutter = function() {
+        return this.shutter.value;
+    };
+
+    this.getAperture = function() {
+        return this.aperture.value;
+    };
+
+    this.compareTo = function(other) {
+        var deltaIso = this.iso.compareTo(other.iso);
+        var deltaShutter = this.shutter.compareTo(other.shutter);
+        var deltaAperture = this.aperture.compareTo(other.aperture);
+
+        return deltaIso + deltaShutter + deltaAperture;
+    };
+
+    this.toString = function() {
+        return '[' + this.iso.value + ', ' + this.shutter.value + ', ' + this.aperture.value + ']';
+    };
+
 }

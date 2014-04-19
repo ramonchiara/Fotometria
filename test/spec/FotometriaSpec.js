@@ -23,7 +23,7 @@ describe("ISO", function() {
             var isoB = new Iso(test.isoB);
 
             it("It should have " + test.ev + " EVs between " + isoA.value + " and " + isoB.value, function() {
-                expect(isoA.toReach(isoB)).toBe(test.ev);
+                expect(isoA.compareTo(isoB)).toBe(test.ev);
             });
         });
     });
@@ -60,7 +60,7 @@ describe("Shutter", function() {
             var sB = new Shutter(test.sB);
 
             it("It should have " + test.ev + " EVs between " + sA.value + " and " + sB.value, function() {
-                expect(sA.toReach(sB)).toBe(test.ev);
+                expect(sA.compareTo(sB)).toBe(test.ev);
             });
         });
     });
@@ -94,7 +94,48 @@ describe("Aperture", function() {
             var aB = new Aperture(test.aB);
 
             it("It should have " + test.ev + " EVs between " + aA.value + " and " + aB.value, function() {
-                expect(aA.toReach(aB)).toBe(test.ev);
+                expect(aA.compareTo(aB)).toBe(test.ev);
+            });
+        });
+    });
+
+});
+
+describe("Configuration", function() {
+
+    it("Should be possible to create a configuration", function() {
+        var sunny16 = new Configuration(100, "1/100", 16);
+
+        expect(sunny16.getIso()).toBe(100);
+        expect(sunny16.getShutter()).toBe('1/100');
+        expect(sunny16.getAperture()).toBe(16);
+    });
+
+    describe("It should be possible to compare two Configuration in EVs", function() {
+        var tests = [
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/30', 22), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/60', 16), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/125', 11), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/250', 8), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/500', 5.6), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(200, '1/250', 11), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(200, '1/125', 16), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(400, '1/500', 11), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(400, '1/125', 22), ev: 0},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(400, '1/125', 11), ev: 2},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/30', 11), ev: 2},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/125', 5.6), ev: 2},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/125', 22), ev: -2},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/250', 16), ev: -2},
+            {configA: new Configuration(100, '1/125', 11), configB: new Configuration(100, '1/500', 11), ev: -2}
+        ];
+
+        tests.forEach(function(test) {
+            var configA = test.configA;
+            var configB = test.configB;
+
+            it("It should have " + test.ev + " EVs between " + configA + " and " + configB, function() {
+                expect(configA.compareTo(configB)).toBe(test.ev);
             });
         });
     });
