@@ -126,6 +126,16 @@ fotometria.controller('FotometriaCtrl', ['$scope', function($scope) {
             $scope.deltaAperture = new Aperture($scope.apertureA).compareTo(new Aperture($scope.apertureB));
             $scope.deltaTotal = $scope.deltaIso + $scope.deltaShutter + $scope.deltaAperture;
         };
+
+        $scope.isoA = 100;
+        $scope.shutterA = '1/125';
+        $scope.apertureA = 11;
+
+        $scope.isoB = 400;
+        $scope.shutterB = '1/250';
+        $scope.apertureB = 16;
+
+        $scope.update();
     }]);
 
 fotometria.directive('isoSlider', function() {
@@ -137,6 +147,7 @@ fotometria.directive('isoSlider', function() {
         link: function(scope, element, attrs) {
             element.slider({
                 min: 0,
+                value: scope.$parent.isos.indexOf(scope.iso),
                 max: scope.$parent.isos.length - 1,
                 slide: function(event, ui) {
                     scope.iso = scope.$parent.isos[ui.value];
@@ -160,6 +171,7 @@ fotometria.directive('shutterSlider', function() {
         link: function(scope, element, attrs) {
             element.slider({
                 min: 0,
+                value: scope.$parent.shutters.indexOf(scope.shutter),
                 max: scope.$parent.shutters.length - 1,
                 slide: function(event, ui) {
                     scope.shutter = scope.$parent.shutters[ui.value];
@@ -183,6 +195,7 @@ fotometria.directive('apertureSlider', function() {
         link: function(scope, element, attrs) {
             element.slider({
                 min: 0,
+                value: scope.$parent.apertures.indexOf(scope.aperture),
                 max: scope.$parent.apertures.length - 1,
                 slide: function(event, ui) {
                     scope.aperture = scope.$parent.apertures[ui.value];
