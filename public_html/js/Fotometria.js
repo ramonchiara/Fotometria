@@ -45,10 +45,10 @@ function Shutter(value) {
     this.value = value;
 
     this.compareTo = function(other) {
-        var shutters = ShutterValues();
+        var apertures = ShutterValues();
 
-        var index1 = shutters.indexOf(this.value);
-        var index2 = shutters.indexOf(other.value);
+        var index1 = apertures.indexOf(this.value);
+        var index2 = apertures.indexOf(other.value);
 
         return index1 - index2;
     };
@@ -117,6 +117,15 @@ var fotometria = angular.module('Fotometria', []);
 
 fotometria.controller('FotometriaCtrl', ['$scope', function($scope) {
         $scope.isos = IsoValues();
+        $scope.shutters = ShutterValues();
+        $scope.apertures = ApertureValues();
+
+        $scope.update = function() {
+            $scope.deltaIso = new Iso($scope.isoA).compareTo(new Iso($scope.isoB));
+            $scope.deltaShutter = new Shutter($scope.shutterA).compareTo(new Shutter($scope.shutterB));
+            $scope.deltaAperture = new Aperture($scope.apertureA).compareTo(new Aperture($scope.apertureB));
+            $scope.deltaTotal = $scope.deltaIso + $scope.deltaShutter + $scope.deltaAperture;
+        };
     }]);
 
 fotometria.directive('isoSlider', function() {
@@ -134,7 +143,56 @@ fotometria.directive('isoSlider', function() {
                     scope.$apply();
                 }
             });
+            scope.$watch('iso', function() {
+                scope.$parent.update();
+            });
             scope.iso = scope.$parent.isos[element.slider('value')];
+        }
+    };
+});
+
+fotometria.directive('shutterSlider', function() {
+    return {
+        restrict: 'C',
+        scope: {
+            shutter: '=id'
+        },
+        link: function(scope, element, attrs) {
+            element.slider({
+                min: 0,
+                max: scope.$parent.shutters.length - 1,
+                slide: function(event, ui) {
+                    scope.shutter = scope.$parent.shutters[ui.value];
+                    scope.$apply();
+                }
+            });
+            scope.$watch('shutter', function() {
+                scope.$parent.update();
+            });
+            scope.shutter = scope.$parent.shutters[element.slider('value')];
+        }
+    };
+});
+
+fotometria.directive('apertureSlider', function() {
+    return {
+        restrict: 'C',
+        scope: {
+            aperture: '=id'
+        },
+        link: function(scope, element, attrs) {
+            element.slider({
+                min: 0,
+                max: scope.$parent.apertures.length - 1,
+                slide: function(event, ui) {
+                    scope.aperture = scope.$parent.apertures[ui.value];
+                    scope.$apply();
+                }
+            });
+            scope.$watch('aperture', function() {
+                scope.$parent.update();
+            });
+            scope.aperture = scope.$parent.apertures[element.slider('value')];
         }
     };
 });
