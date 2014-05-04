@@ -113,12 +113,23 @@ function Configuration(iso, shutter, aperture) {
 
 }
 
-var fotometria = angular.module('Fotometria', []);
+var fotometria = angular.module('Fotometria', ['ngRoute']);
 
-fotometria.controller('FotometriaCtrl', ['$scope', function($scope) {
+fotometria.config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+                .when('/slider', {templateUrl: 'partials/slider.html', controller: 'FotometriaCtrl'})
+                .when('/select', {templateUrl: 'partials/select.html', controller: 'FotometriaCtrl'})
+                .otherwise({templateUrl: 'partials/help.html', controller: 'FotometriaCtrl'});
+    }]);
+
+fotometria.controller('FotometriaCtrl', ['$scope', '$location', function($scope, $location) {
         $scope.isos = IsoValues();
         $scope.shutters = ShutterValues();
         $scope.apertures = ApertureValues();
+
+        $scope.isActive = function(path) {
+            return $location.path() === path;
+        };
 
         $scope.update = function() {
             $scope.deltaIso = new Iso($scope.isoA).compareTo(new Iso($scope.isoB));
