@@ -11,12 +11,25 @@
     <body>
         <div class="container" ng-app="Fotometria" ng-controller="FotometriaCtrl">
             <h1><a href="index.html">Fotometria</a></h1>
-            <div class="navbar navbar-default">
-                <ul class="nav navbar-nav">
-                    <li ng-class="{active: isActive('/slider')}"><a href="#/slider">Com Slider</a></li>
-                    <li ng-class="{active: isActive('/select')}"><a href="#/select">Com Select</a></li>
-                </ul>
-            </div>
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#fotometriaApp">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Fotometria</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="fotometriaApp">
+                        <ul class="nav navbar-nav">
+                            <li ng-class="{active: isActive('/slider')}"><a href="#/slider">Com Slider</a></li>
+                            <li ng-class="{active: isActive('/select')}"><a href="#/select">Com Select</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
             <div ng-view></div>
             <h2>Autor</h2>
             <address>
