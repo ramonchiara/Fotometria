@@ -113,16 +113,16 @@ function Configuration(iso, shutter, aperture) {
 
 }
 
-var fotometria = angular.module('Fotometria', ['ngRoute']);
+var fotometriaApp = angular.module('FotometriaApp', ['ngRoute']);
 
-fotometria.config(['$routeProvider', function($routeProvider) {
+fotometriaApp.config(['$routeProvider', function($routeProvider) {
         $routeProvider
                 .when('/slider', {templateUrl: 'partials/slider.html', controller: 'FotometriaCtrl'})
                 .when('/select', {templateUrl: 'partials/select.html', controller: 'FotometriaCtrl'})
                 .otherwise({templateUrl: 'partials/help.html', controller: 'FotometriaCtrl'});
     }]);
 
-fotometria.controller('FotometriaCtrl', ['$scope', '$location', function($scope, $location) {
+fotometriaApp.controller('FotometriaCtrl', ['$scope', '$location', function($scope, $location) {
         $scope.isos = IsoValues();
         $scope.shutters = ShutterValues();
         $scope.apertures = ApertureValues();
@@ -149,7 +149,7 @@ fotometria.controller('FotometriaCtrl', ['$scope', '$location', function($scope,
         $scope.update();
     }]);
 
-fotometria.directive('isoSlider', function() {
+fotometriaApp.directive('isoSlider', function() {
     return {
         restrict: 'C',
         scope: {
@@ -173,7 +173,7 @@ fotometria.directive('isoSlider', function() {
     };
 });
 
-fotometria.directive('shutterSlider', function() {
+fotometriaApp.directive('shutterSlider', function() {
     return {
         restrict: 'C',
         scope: {
@@ -197,7 +197,7 @@ fotometria.directive('shutterSlider', function() {
     };
 });
 
-fotometria.directive('apertureSlider', function() {
+fotometriaApp.directive('apertureSlider', function() {
     return {
         restrict: 'C',
         scope: {
